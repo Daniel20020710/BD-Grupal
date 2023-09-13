@@ -1,0 +1,98 @@
+-- Registros para la tabla Persona
+INSERT INTO Personas (DNI, Nombre, Apellidos, Direccion, Poblacion, Telefono)
+VALUES
+    ('123456789', 'Juan', 'Pérez', 'Calle 123', 'Bogotá', '1234567890'),
+    ('987654321', 'Ana', 'Gómez', 'Avenida Principal', 'Medellín', '9876543210'),
+    ('456789123', 'Carlos', 'Rodríguez', 'Carrera 45', 'Cali', '4567891230'),
+    ('789123456', 'Laura', 'López', 'Calle 67', 'Barranquilla', '7891234560'),
+    ('654321987', 'Pedro', 'Hernández', 'Carrera 89', 'Cartagena', '6543219870'),
+    ('321654987', 'María', 'Martínez', 'Avenida Norte', 'Bucaramanga', '3216549870'),
+    ('234567890', 'Luis', 'García', 'Calle 34', 'Manizales', '2345678901'),
+    ('567890123', 'Carmen', 'Fernández', 'Carrera 12', 'Pereira', '5678901231'),
+    ('890123456', 'Javier', 'Torres', 'Avenida Sur', 'Santa Marta', '8901234561'),
+    ('345678901', 'Sofía', 'Ortega', 'Calle 56', 'Villavicencio', '3456789012');
+
+-- Registros para la tabla Vehiculo
+INSERT INTO Vehiculos (Matricula, Marca, Modelo)
+VALUES
+    ('ABC123', 'Toyota', 'Corolla'),
+    ('XYZ987', 'Honda', 'Civic'),
+    ('DEF456', 'Chevrolet', 'Spark'),
+    ('GHI789', 'Ford', 'Focus'),
+    ('JKL321', 'Nissan', 'Sentra'),
+    ('MNO654', 'Volkswagen', 'Golf'),
+    ('PQR987', 'Hyundai', 'Elantra'),
+    ('STU123', 'Kia', 'Sorento'),
+    ('VWX456', 'Mazda', 'CX-5'),
+    ('YZA789', 'Renault', 'Clio');
+
+-- Registros para la tabla Accidente
+INSERT INTO Accidentes (NumeroReferencia, Fecha, Lugar, Hora)
+VALUES
+    (1, '2023-09-12', 'Calle 1, Bogotá', '10:30:00'),
+    (2, '2023-09-11', 'Avenida 2, Medellín', '14:45:00'),
+    (3, '2023-09-10', 'Carrera 3, Cali', '16:20:00'),
+    (4, '2023-09-09', 'Calle 4, Barranquilla', '09:15:00'),
+    (5, '2023-09-08', 'Avenida 5, Cartagena', '11:50:00'),
+    (6, '2023-09-07', 'Carrera 6, Bucaramanga', '08:00:00'),
+    (7, '2023-09-06', 'Calle 7, Manizales', '13:30:00'),
+    (8, '2023-09-05', 'Carrera 8, Pereira', '15:10:00'),
+    (9, '2023-09-04', 'Avenida 9, Santa Marta', '17:55:00'),
+    (10, '2023-09-03', 'Calle 10, Villavicencio', '19:40:00');
+
+-- Registros para la tabla Multa
+INSERT INTO Multas (NumeroReferencia, Fecha, Hora, LugarInfraccion, Importe)
+VALUES
+    (101, '2023-09-12', '08:30:00', 'Carrera 11, Bogotá', 150000),
+    (102, '2023-09-11', '14:00:00', 'Avenida 12, Medellín', 200000),
+    (103, '2023-09-10', '16:45:00', 'Calle 13, Cali', 100000),
+    (104, '2023-09-09', '09:00:00', 'Carrera 14, Barranquilla', 180000),
+    (105, '2023-09-08', '11:20:00', 'Avenida 15, Cartagena', 120000),
+    (106, '2023-09-07', '08:15:00', 'Carrera 16, Bucaramanga', 90000),
+    (107, '2023-09-06', '13:20:00', 'Calle 17, Manizales', 160000),
+    (108, '2023-09-05', '15:45:00', 'Carrera 18, Pereira', 110000),
+    (109, '2023-09-04', '17:30:00', 'Avenida 19, Santa Marta', 130000),
+    (110, '2023-09-03', '19:15:00', 'Calle 20, Villavicencio', 170000);
+
+-- Registros para la tabla Involucrar
+INSERT INTO Involucrar (NumeroReferencia_Accidente, DNI_Persona, Matricula_Vehiculo)
+VALUES
+    (1, '123456789', 'ABC123'),
+    (1, '987654321', 'XYZ987'),
+    (2, '456789123', 'DEF456'),
+    (3, '789123456', 'GHI789'),
+    (3, '654321987', 'JKL321'),
+    (4, '321654987', 'MNO654'),
+    (5, '234567890', 'PQR987'),
+    (6, '567890123', 'STU123'),
+    (7, '890123456', 'VWX456'),
+    (8, '345678901', 'YZA789');
+
+-- Registros para la tabla Aplicar_Multa
+INSERT INTO Aplicar_Multas (NumeroReferencia_Multa, DNI_Persona, Matricula_Vehiculo)
+VALUES
+    (101, '123456789', 'ABC123'),
+    (102, '987654321', 'XYZ987'),
+    (103, '456789123', 'DEF456'),
+    (104, '789123456', 'GHI789'),
+    (105, '654321987', 'JKL321'),
+    (106, '321654987', 'MNO654'),
+    (107, '234567890', 'PQR987'),
+    (108, '567890123', 'STU123'),
+    (109, '890123456', 'VWX456'),
+    (110, '345678901', 'YZA789');
+
+-- Registros para la tabla Propietario
+INSERT INTO Propietarios (DNI_Persona, Matricula_Vehiculo)
+VALUES
+    ('123456789', 'ABC123'),
+    ('987654321', 'XYZ987'),
+    ('456789123', 'DEF456'),
+    ('789123456', 'GHI789'),
+    ('654321987', 'JKL321'),
+    ('321654987', 'MNO654'),
+    ('234567890', 'PQR987'),
+    ('567890123', 'STU123'),
+    ('890123456', 'VWX456'),
+    ('345678901', 'YZA789');
+

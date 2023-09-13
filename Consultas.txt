@@ -1,0 +1,166 @@
+SELECTS:
+
+____________________________________________________
+
+SELECT * FROM personas;
+____________________________________________________________________________________
+
+SELECT nombre, Apellidos
+FROM Personas
+WHERE Apellidos LIKE '%ez';
+_______________________________________________________
+
+SELECT Matricula, Modelo, DNI_Persona
+FROM vehiculos, propietarios 
+WHERE propietarios.Matricula_Vehiculo=vehiculos.Matricula;
+
+
+INNER JOIN:
+_____________________________________________________________________________________
+
+SELECT
+    personas.Nombre AS NombrePersona,
+    personas.DNI AS DNIPersona,
+    vehiculos.Matricula AS MatriculaVehiculo,
+    accidentes.Lugar AS LugarAccidente,
+    accidentes.Fecha AS FechaAccidente,
+    multas.Importe AS CostoMulta
+FROM
+    personas
+INNER JOIN
+    involucrar ON personas.DNI = involucrar.DNI_Persona
+INNER JOIN
+    accidentes ON involucrar.NumeroReferencia_Accidente = accidentes.NumeroReferencia
+INNER JOIN
+    Aplicar_Multas ON personas.DNI = Aplicar_Multas.DNI_Persona
+INNER JOIN
+    Multas ON Aplicar_Multas.NumeroReferencia_Multa = Multas.NumeroReferencia
+INNER JOIN
+    vehiculos ON Aplicar_Multas.Matricula_Vehiculo = vehiculos.Matricula;
+________________________________________________________________________________________________
+ SELECT
+ personas.Nombre AS NombrePersona,
+    personas.DNI AS DNIPersona,
+    vehiculos.Matricula AS MatriculaVehiculo,
+    accidentes.Lugar AS LugarAccidente,
+    accidentes.Fecha AS FechaAccidente,
+    multas.Importe AS CostoMulta
+FROM
+    personas 
+INNER JOIN
+    involucrar ON personas.DNI = involucrar.DNI_Persona
+INNER JOIN
+    accidentes ON involucrar.NumeroReferencia_Accidente = accidentes.NumeroReferencia
+INNER JOIN
+    Aplicar_Multas ON personas.DNI = Aplicar_Multas.DNI_Persona
+INNER JOIN
+    Multas ON Aplicar_Multas.NumeroReferencia_Multa = Multas.NumeroReferencia
+INNER JOIN
+    vehiculos ON Aplicar_Multas.Matricula_Vehiculo = vehiculos.Matricula
+    WHERE multas.importe > '100000';
+_______________________________________________________________________________________________
+
+
+SELECT personas.*, vehiculos.Matricula
+FROM personas 
+INNER JOIN Propietarios  ON personas.DNI = propietarios.DNI_Persona
+INNER JOIN Vehiculos ON propietarios.Matricula_Vehiculo = vehiculos.Matricula;
+
+
+_________________________________________________________________________________________________
+LEFT JOIN:
+
+SELECT
+    personas.Nombre AS NombrePersona,
+    personas.DNI AS DNIPersona,
+    multas.Fecha AS FechaMulta,
+    multas.Importe AS CostoMulta
+FROM
+    personas
+LEFT JOIN
+    Aplicar_Multas ON personas.DNI =  Aplicar_Multas.DNI_Persona
+LEFT JOIN
+    multas ON  Aplicar_Multas.NumeroReferencia_Multa = multas.NumeroReferencia;
+
+
+Order by:
+_____________________________________________________________________________________
+SELECT
+    personas.Nombre AS NombrePersona,
+    accidentes.Lugar AS LugarAccidente,
+    vehiculos.Marca AS MarcaVehiculo,
+    vehiculos.Modelo AS ModeloVehiculo,
+    accidentes.Fecha AS FechaAccidente,
+    multas.Importe AS ImporteMulta
+FROM
+    involucrar
+JOIN
+    personas ON involucrar.DNI_Persona = personas.DNI
+JOIN
+    accidentes ON involucrar.NumeroReferencia_Accidente = accidentes.NumeroReferencia
+JOIN
+    aplicar_multas ON involucrar.DNI_Persona = aplicar_multas.DNI_Persona
+JOIN
+    multas ON aplicar_multas.NumeroReferencia_Multa = multas.NumeroReferencia
+JOIN
+	vehiculos ON aplicar_multas.Matricula_Vehiculo = vehiculos.Matricula 
+    order by accidentes.Fecha
+
+
+Group by :
+__________________________________________________________________________________
+SELECT
+    personas.DNI AS DNI_Persona,
+    personas.Nombre AS NombrePersona,
+    COUNT(multas.NumeroReferencia) AS CantidadMultas
+FROM
+    personas
+LEFT JOIN
+    Aplicar_Multas ON personas.DNI = Aplicar_Multas.DNI_Persona
+LEFT JOIN
+    multas ON Aplicar_Multas.NumeroReferencia_Multa = multas.NumeroReferencia
+GROUP BY
+    personas.DNI, personas.Nombre
+ORDER BY
+    CantidadMultas DESC;
+
+Sub Consultas:
+____________________________________________________________________________________
+
+SELECT
+    personas.DNI AS DNI_Persona,
+    personas.Nombre AS NombrePersona,
+    (
+        SELECT COUNT(Multas.NumeroReferencia)
+        FROM Multas
+        WHERE Multas.NumeroReferencia IN (
+            SELECT Aplicar_Multas.NumeroReferencia_Multa
+            FROM Aplicar_Multas
+            WHERE Aplicar_Multas.DNI_Persona = personas.DNI
+        )
+    ) AS CantidadMultas
+FROM
+    personas
+ORDER BY
+    CantidadMultas DESC;
+________________________________________________________________________________
+
+HAVING:
+
+SELECT
+    personas.DNI AS DNI_Persona,
+    personas.Nombre AS NombrePersona,
+    COUNT(Multas.NumeroReferencia) AS CantidadMultas
+FROM
+    personas
+LEFT JOIN
+    Aplicar_Multas ON personas.DNI = Aplicar_Multas.DNI_Persona
+LEFT JOIN
+    Multas ON aplicar_multas.NumeroReferencia_Multa = Multas.NumeroReferencia
+GROUP BY
+    personas.DNI, personas.Nombre
+HAVING
+    CantidadMultas > 1
+ORDER BY
+    CantidadMultas DESC;
+__________________________________________________________________________________
